@@ -16,7 +16,7 @@ export const App = () => {
     { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
   ]);
   const [filter, setFilter] = useState('');
-  const [status, setStatus] = useState("start");
+  const [status, setStatus] = useState('');
   useEffect(() => {
     const localData = JSON.parse(localStorage.getItem(KEY)) || [];
     if (localData.length > 0) {
@@ -34,7 +34,7 @@ export const App = () => {
         return;
     }
   }, [status, contacts])
-  const change = (value) => {
+  const changeFilter = (value) => {
     setFilter(value);
   }
   const getFilteredContacts = () => {
@@ -64,7 +64,7 @@ export const App = () => {
     <Title>Phonebook</Title>
     <Form onSubmit={formSubmitHander} />
     <Title>Contacts</Title>
-    <Filter value={filter} change={change} />
+    <Filter value={filter} change={changeFilter} />
     <ContactList options={getFilteredContacts()} deleteContact={onDelete} />
   </Container >)
 }
