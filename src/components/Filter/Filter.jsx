@@ -1,13 +1,13 @@
 import PropTypes from "prop-types";
 import { Container, FilterText, FilterInput } from "./Filter.styled";
-export const Filter = ({ value, change }) => {
+export const Filter = ({ value, onChange }) => {
     return (<Container>
         <FilterText>Find contact</FilterText>
-        <FilterInput value={value} onChange={(e) => change(e.target.value)}></FilterInput>
+        <FilterInput value={value} onChange={(e) => onChange(e.target.value)}></FilterInput>
     </Container>)
 }
 
 Filter.propTypes = {
     value: PropTypes.string,
-    change: PropTypes.func
+    onChange: PropTypes.func
 }

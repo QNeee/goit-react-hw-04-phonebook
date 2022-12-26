@@ -34,7 +34,7 @@ export const App = () => {
         return;
     }
   }, [status, contacts])
-  const changeFilter = (value) => {
+  const onChangeFilter = (value) => {
     setFilter(value);
   }
   const getFilteredContacts = () => {
@@ -64,7 +64,7 @@ export const App = () => {
     <Title>Phonebook</Title>
     <Form onSubmit={formSubmitHander} />
     <Title>Contacts</Title>
-    <Filter value={filter} change={changeFilter} />
-    <ContactList options={getFilteredContacts()} deleteContact={onDelete} />
+    <Filter value={filter} onChange={onChangeFilter} />
+    <ContactList contacts={getFilteredContacts()} deleteContact={onDelete} />
   </Container >)
 }

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { nanoid } from 'nanoid'
 import { ContainerForm, Label, Button } from "./Form.styled";
-
+import PropTypes from "prop-types";
 export const Form = (props) => {
     const [name, setName] = useState('');
     const [number, setNumber] = useState('');
@@ -10,6 +10,8 @@ export const Form = (props) => {
     const onSubmit = (e) => {
         e.preventDefault();
         props.onSubmit({ name, number });
+        setName('');
+        setNumber('');
     }
     const inputHandler = (e) => {
         switch (e.target.name) {
@@ -45,6 +47,8 @@ export const Form = (props) => {
         <Button type="submit">Add Contact</Button>
     </ContainerForm>);
 }
-
+Form.propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+};
 
 
