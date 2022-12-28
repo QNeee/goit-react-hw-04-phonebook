@@ -6,7 +6,10 @@ import { Filter } from "./Filter/Filter";
 import { Container, Title } from "./App.styled";
 import { useEffect, useState } from "react";
 
-
+const stateMachine = {
+  DELETING: "deleting",
+  ADD: "add"
+}
 export const App = () => {
   const KEY = 'local-key';
   const [contacts, setContacts] = useState([
@@ -24,14 +27,8 @@ export const App = () => {
     }
   }, [])
   useEffect(() => {
-    switch (status) {
-      case "deleting":
-        localStorage.removeItem(KEY);
-        return localStorage.setItem(KEY, JSON.stringify(contacts));
-      case "add":
-        return localStorage.setItem(KEY, JSON.stringify(contacts));
-      default:
-        return;
+    if (status === stateMachine.ADD || status === stateMachine.DELETING) {
+      return localStorage.setItem(KEY, JSON.stringify(contacts));
     }
   }, [status, contacts])
   const onChangeFilter = (value) => {
@@ -50,15 +47,13 @@ export const App = () => {
     const findContact = contacts.find(item => item.name.toLowerCase() === data.name.toLowerCase())
     if (!findContact) {
       setContacts([...contacts, newContact]);
-      return setStatus("add")
+      return setStatus(stateMachine.ADD)
     }
     return alert(`${data.name} is already in list`);
   }
   const onDelete = (id) => {
-    const idx = contacts.findIndex(i => i.id === id);
     setContacts(contacts => contacts.filter(item => item.id !== id));
-    contacts.splice(idx, 1);
-    setStatus("deleting");
+    setStatus(stateMachine.DELETING);
   }
   return (<Container>
     <Title>Phonebook</Title>
