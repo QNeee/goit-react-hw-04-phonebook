@@ -3,30 +3,29 @@ import { nanoid } from 'nanoid'
 import { ContainerForm, Label, Button } from "./Form.styled";
 import PropTypes from "prop-types";
 export const Form = (props) => {
-    const [name, setName] = useState('');
-    const [number, setNumber] = useState('');
+    const [form, setForm] = useState({ name: '', number: '' });
     const inputNameId = nanoid();
     const inputNumberId = nanoid();
     const onSubmit = (e) => {
         e.preventDefault();
-        props.onSubmit({ name, number });
-        setName('');
-        setNumber('');
+        props.onSubmit(form);
+        setForm({ name: '', number: '' });
     }
     const inputHandler = (e) => {
-        switch (e.target.name) {
-            case "name": return setName(e.target.value);
-            case "number": return setNumber(e.target.value);
-            default:
-                return;
-        }
+        const { name, value } = e.target;
+        setForm(prev => {
+            return {
+                ...prev,
+                [name]: value,
+            };
+        });
     }
     return (<ContainerForm onSubmit={onSubmit}>
         <Label htmlFor={inputNameId}>Name
             <input
                 type="text"
                 name="name"
-                value={name}
+                value={form.name}
                 onChange={inputHandler}
                 id={inputNameId}
                 pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -37,7 +36,7 @@ export const Form = (props) => {
             <input
                 type="tel"
                 name="number"
-                value={number}
+                value={form.number}
                 onChange={inputHandler}
                 id={inputNumberId}
                 pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
